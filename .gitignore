@@ -22,6 +22,9 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+global.json
+# Visual Studio 2015 cache/options directory
+.vs/
 
 # .NET Core
 project.lock.json
