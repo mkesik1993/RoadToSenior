@@ -9,7 +9,7 @@ namespace WordAnalytics.Cli
         IWordRanker ranker,
         ILogger<TextAnalysisService> logger)
     {
-        public List<KeyValuePair<string, int>> Analyze(string input)
+        public List<KeyValuePair<string, int>> Analyze(string? input)
         {
             var counts = counter.CountWords(input);
 

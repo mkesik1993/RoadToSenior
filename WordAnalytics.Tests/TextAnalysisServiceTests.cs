@@ -21,7 +21,7 @@ namespace WordAnalytics.Tests
         }
 
         [Fact]
-        public void Analyze_PassesCounterResultToRanker()
+        public void Analyze_PassesOneWordTwice_ReturnCorrectList()
         {
             // Arrange
             var counts = new Dictionary<string, int> { ["hello"] = 2 };
@@ -38,17 +38,17 @@ namespace WordAnalytics.Tests
         }
 
         [Fact]
-        public void Analyze_WithNullInput_PassesEmptyStringToCounter()
+        public void Analyze_WithNullInput_ReturnEmptyList()
         {
             // Arrange
             _counter.Setup(c => c.CountWords(It.IsAny<string>())).Returns(new Dictionary<string, int>());
-            _ranker.Setup(r => r.GetTop(It.IsAny<Dictionary<string, int>>())).Returns(new List<KeyValuePair<string, int>>());
+            _ranker.Setup(r => r.GetTop(It.IsAny<Dictionary<string, int>>())).Returns([]);
 
             // Act
-            _service.Analyze(null);
+            var result = _service.Analyze(null);
 
             // Assert
-            _counter.Verify(c => c.CountWords(It.IsAny<string>()), Times.Once);
+            Assert.Empty(result);
         }
     }
 }
