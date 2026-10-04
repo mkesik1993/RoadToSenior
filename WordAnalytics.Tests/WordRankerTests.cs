@@ -26,7 +26,7 @@ namespace WordAnalytics.Tests
             var top = CreateService().GetTop(SampleCounts());
 
             // Assert
-            Assert.Equal(new[] { "code", "hello" }, top.Take(2).Select(kv => kv.Key));
+            Assert.Equal(["code", "hello"], top.Take(2).Select(kv => kv.Key));
         }
 
         [Theory]
