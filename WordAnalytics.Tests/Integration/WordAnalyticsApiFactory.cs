@@ -8,7 +8,10 @@ namespace WordAnalytics.Tests.Integration
 {
     public class WordAnalyticsApiFactory : WebApplicationFactory<Program>
     {
-        private readonly Dictionary<string, string?> _configuration = new();
+        private readonly Dictionary<string, string?> _configuration = new()
+        {
+            ["RateLimiting:PermitLimit"] = "10000"
+        };
         private Action<IServiceCollection>? _configureServices;
 
         public WordAnalyticsApiFactory WithConfiguration(string key, string? value)

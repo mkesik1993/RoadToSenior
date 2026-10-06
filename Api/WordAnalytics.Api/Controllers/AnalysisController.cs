@@ -2,6 +2,7 @@
 using WordAnalytics.Api.Contracts.Requests;
 using WordAnalytics.Api.Contracts.Responses;
 using WordAnalytics.Api.Filters;
+using WordAnalytics.Api.Infrastructure.RateLimiting;
 using WordAnalytics.Counting.Interfaces;
 using WordAnalytics.Ranking.Interfaces;
 
@@ -18,7 +19,9 @@ namespace WordAnalytics.Api.Controllers
                 .WithName("AnalyzeText")
                 .WithSummary("Returns the most frequently used words in the given text.")
                 .AddEndpointFilter<ValidationFilter<AnalyzeRequest>>()
-                .ProducesValidationProblem();
+                .RequireRateLimiting(RateLimitingSettings.AnalyzePolicy)
+                .ProducesValidationProblem()
+                .ProducesProblem(StatusCodes.Status429TooManyRequests);
 
             return app;
         }

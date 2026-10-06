@@ -12,14 +12,16 @@ namespace WordAnalytics.Tests.Integration
         [Fact]
         public async Task Analyze_WithValidText_Returns200AndTopWords()
         {
+            // Arrange
             var request = new AnalyzeRequest { Text = "Hello, hello world! Code code code." };
 
+            // Act
             var httpResponse = await _client.PostAsJsonAsync("/api/analyze", request);
-
-            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
-
             var response = await httpResponse.Content
                 .ReadFromJsonAsync<AnalyzeResponse>();
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
 
             Assert.NotNull(response);
             Assert.Equal(3, response.Top.Count);
@@ -33,12 +35,15 @@ namespace WordAnalytics.Tests.Integration
         [Fact]
         public async Task Analyze_WithTopCountOverride_ReturnsRequestedNumberOfWords()
         {
+            // Arrange
             var request = new AnalyzeRequest { Text = "a a b b c c d", TopCount = 2 };
 
+            // Act
             var httpResponse = await _client.PostAsJsonAsync("/api/analyze", request);
             var response = await httpResponse.Content
                 .ReadFromJsonAsync<AnalyzeResponse>();
 
+            // Assert
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
             Assert.Equal(2, response!.Top.Count);
         }

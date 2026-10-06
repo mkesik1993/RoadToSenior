@@ -13,14 +13,16 @@ namespace WordAnalytics.Tests.Integration
         [Fact]
         public async Task Analyze_WithEmptyText_Returns400WithTextError()
         {
+            // Arrange
             var response = await _client.PostAsJsonAsync("/api/analyze",
                 new AnalyzeRequest { Text = string.Empty });
 
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-
+            // Act
             var problem = await response.Content
                 .ReadFromJsonAsync<ValidationProblemDetails>();
 
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.NotNull(problem);
             Assert.Equal(400, problem.Status);
             Assert.True(problem.Errors.ContainsKey("Text"));
@@ -30,10 +32,13 @@ namespace WordAnalytics.Tests.Integration
         [Fact]
         public async Task Analyze_WithMissingTextProperty_Returns400()
         {
+            // Arrange
             var content = new StringContent("""{"topCount":5}""", Encoding.UTF8, "application/json");
 
+            // Act
             var response = await _client.PostAsync("/api/analyze", content);
 
+            // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -43,26 +48,27 @@ namespace WordAnalytics.Tests.Integration
         [InlineData(101)]
         public async Task Analyze_WithTopCountOutOfRange_Returns400(int topCount)
         {
+            // Act
             var response = await _client.PostAsJsonAsync("/api/analyze",
                 new AnalyzeRequest { Text = "hello world", TopCount = topCount });
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-
             var problem = await response.Content
                 .ReadFromJsonAsync<ValidationProblemDetails>();
 
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.True(problem!.Errors.ContainsKey("TopCount"));
         }
 
         [Fact]
         public async Task Analyze_WithMultipleErrors_ReturnsAllOfThem()
         {
+            // Act
             var response = await _client.PostAsJsonAsync("/api/analyze",
                 new AnalyzeRequest { Text = string.Empty, TopCount = 999 });
-
             var problem = await response.Content
                 .ReadFromJsonAsync<ValidationProblemDetails>();
 
+            // Assert
             Assert.Equal(2, problem!.Errors.Count);
             Assert.True(problem.Errors.ContainsKey("Text"));
             Assert.True(problem.Errors.ContainsKey("TopCount"));

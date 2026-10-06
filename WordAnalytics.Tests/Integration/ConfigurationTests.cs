@@ -9,34 +9,39 @@ namespace WordAnalytics.Tests.Integration
         [Fact]
         public async Task TopCount_DefaultsToConfiguredValue_WhenNotProvidedInRequest()
         {
+            // Arrange
             await using var factory = new WordAnalyticsApiFactory()
                 .WithConfiguration("Ranking:TopCount", "2");
-
             using var client = factory.CreateClient();
 
+            // Act
             var httpResponse = await client.PostAsJsonAsync("/api/analyze",
                 new AnalyzeRequest { Text = "a a b b c c d d e" });
 
             var response = await httpResponse.Content
                 .ReadFromJsonAsync<AnalyzeResponse>();
 
+            // Assert
             Assert.Equal(2, response!.Top.Count);
         }
 
         [Fact]
         public async Task RequestTopCount_OverridesConfiguration()
         {
-            using var factory = new WordAnalyticsApiFactory()
+            // Arrange
+            await using var factory = new WordAnalyticsApiFactory()
                 .WithConfiguration("Ranking:TopCount", "2");
 
             using var client = factory.CreateClient();
 
+            // Act
             var httpResponse = await client.PostAsJsonAsync("/api/analyze",
                 new AnalyzeRequest { Text = "a a b b c c d d e", TopCount = 4 });
 
             var response = await httpResponse.Content
                 .ReadFromJsonAsync<AnalyzeResponse>();
 
+            // Assert
             Assert.Equal(4, response!.Top.Count);
         }
     }

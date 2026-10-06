@@ -1,5 +1,7 @@
 using WordAnalytics.Api.Controllers;
 using WordAnalytics.Api.Infrastructure;
+using WordAnalytics.Api.Infrastructure.HealthChecks;
+using WordAnalytics.Api.Infrastructure.RateLimiting;
 using WordAnalytics.Counting;
 using WordAnalytics.Ranking;
 
@@ -9,8 +11,10 @@ builder.Services.AddWordCounting();
 builder.Services.AddWordRanking(builder.Configuration);
 
 builder.Services.AddProblemDetails();
-
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.AddApiHealthChecks();
+builder.Services.AddApiRateLimiting(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,6 +30,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRateLimiter();
+
+app.MapApiHealthChecks();
 app.MapAnalysisEndpoints();
 
 app.Run();
