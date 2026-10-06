@@ -11,6 +11,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="GitHubActionsTestLogger" Version="3.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.31" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
 		<PackageReference Include="xunit" Version="2.9.3" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
@@ -22,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Api\WordAnalytics.Api\WordAnalytics.Api.csproj" />
 	  <ProjectReference Include="..\Console\WordAnalytics.Cli.csproj" />
 	  <ProjectReference Include="..\Counting\WordAnalytics.Counting.csproj" />
 	  <ProjectReference Include="..\Ranking\WordAnalytics.Ranking.csproj" />

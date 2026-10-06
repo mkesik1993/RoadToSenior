@@ -51,5 +51,13 @@ namespace WordAnalytics.Tests
             // Assert
             Assert.Empty(top);
         }
+
+        [Fact]
+        public void GetTop_WithExplicitTake_OverridesConfiguration()
+        {
+            var top = CreateService(topCount: 3).GetTop(SampleCounts(), take: 1);
+
+            Assert.Single(top);
+        }
     }
 }

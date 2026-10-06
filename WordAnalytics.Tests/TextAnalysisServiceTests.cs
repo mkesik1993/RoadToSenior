@@ -28,7 +28,7 @@ namespace WordAnalytics.Tests
             var expected = new List<KeyValuePair<string, int>> { new("hello", 2) };
 
             _counter.Setup(c => c.CountWords(It.IsAny<string>())).Returns(counts);
-            _ranker.Setup(r => r.GetTop(counts)).Returns(expected);
+            _ranker.Setup(r => r.GetTop(counts, null)).Returns(expected);
 
             // Act
             var result = _service.Analyze(It.IsAny<string>());
@@ -42,13 +42,13 @@ namespace WordAnalytics.Tests
         {
             // Arrange
             _counter.Setup(c => c.CountWords(It.IsAny<string>())).Returns(new Dictionary<string, int>());
-            _ranker.Setup(r => r.GetTop(It.IsAny<Dictionary<string, int>>())).Returns([]);
+            _ranker.Setup(r => r.GetTop(It.IsAny<Dictionary<string, int>>(), It.IsAny<int>())).Returns([]);
 
             // Act
             var result = _service.Analyze(null);
 
             // Assert
-            Assert.Empty(result);
+            Assert.Null(result);
         }
     }
 }
