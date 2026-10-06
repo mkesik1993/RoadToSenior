@@ -2,6 +2,6 @@
 {
     public interface IWordRanker
     {
-        public List<KeyValuePair<string, int>> GetTop(Dictionary<string, int> counts);
+        public List<KeyValuePair<string, int>> GetTop(Dictionary<string, int> counts, int? take = null);
     }
 }
