@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+**/TestResults/
+**/CoverageReport/
+
+.git/
+.vs/
+.idea/
+**/*.user
+**/*.suo
+**/*.DotSettings.user

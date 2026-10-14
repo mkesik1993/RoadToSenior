@@ -50,7 +50,7 @@ namespace WordAnalytics.Tests.Integration
             Assert.Equal(HttpStatusCode.OK, live.StatusCode);
         }
 
-        private sealed class ThrowingWordCounter : IWordCounter
+        private class ThrowingWordCounter : IWordCounter
         {
             // Act & Assert
             public Dictionary<string, int> CountWords(string text)
