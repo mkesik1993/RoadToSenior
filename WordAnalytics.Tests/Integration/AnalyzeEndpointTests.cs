@@ -17,19 +17,13 @@ namespace WordAnalytics.Tests.Integration
 
             // Act
             var httpResponse = await _client.PostAsJsonAsync("/api/analyze", request);
-            var response = await httpResponse.Content
-                .ReadFromJsonAsync<AnalyzeResponse>();
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
 
-            Assert.NotNull(response);
-            Assert.Equal(3, response.Top.Count);
+            var json = await httpResponse.Content.ReadAsStringAsync();
 
-            Assert.Equal("code", response.Top[0].Word);
-            Assert.Equal(3, response.Top[0].Count);
-            Assert.Equal("hello", response.Top[1].Word);
-            Assert.Equal(2, response.Top[1].Count);
+            await Verifier.Verify(json);
         }
 
         [Fact]
@@ -47,5 +41,7 @@ namespace WordAnalytics.Tests.Integration
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
             Assert.Equal(2, response!.Top.Count);
         }
+
+
     }
 }
