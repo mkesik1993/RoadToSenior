@@ -4,7 +4,9 @@ namespace WordAnalytics.Tests
 {
     public static class VerifyInitializer
     {
+#pragma warning disable CA2255 // Verify requires a module initializer in test projects
         [ModuleInitializer]
+#pragma warning restore CA2255
         public static void Init()
         {
             Verifier.DerivePathInfo((sourceFile, projectDirectory, type, method) =>

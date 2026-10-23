@@ -53,7 +53,7 @@ namespace WordAnalytics.Tests.Integration
         private class ThrowingWordCounter : IWordCounter
         {
             // Act & Assert
-            public Dictionary<string, int> CountWords(string text)
+            public Dictionary<string, int> CountWords(string? text)
                 => throw new InvalidOperationException("Simulated failure.");
         }
     }
