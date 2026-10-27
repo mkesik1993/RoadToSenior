@@ -1,0 +1,14 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: wordanalytics-api:local
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Ranking__TopCount: "3"
+      RateLimiting__PermitLimit: "10"
+      RateLimiting__WindowSeconds: "60"
+      RateLimiting__QueueLimit: "0"
