@@ -1,4 +1,4 @@
-name: Docker
+name: CI and Docker
 
 on:
   push:
@@ -41,8 +41,29 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration Release
 
-  docker:
+  build-docker:
     name: Build Docker image
+    if: github.event_name == 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image without publishing
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: wordanalytics-api:pr
+
+  publish-docker:
+    name: Publish Docker image
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: test
     runs-on: ubuntu-latest
 
@@ -57,7 +78,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -70,7 +90,6 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}/api
           tags: |
-            type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix=sha-,format=short
 
@@ -79,5 +98,5 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
