@@ -14,8 +14,6 @@ namespace WordAnalytics.Tests
                     directory: Path.Combine(projectDirectory, "Snapshots", type.Name),
                     typeName: type.Name,
                     methodName: method.Name));
-
-            VerifierSettings.IgnoreMembers("testId");
         }
     }
 }

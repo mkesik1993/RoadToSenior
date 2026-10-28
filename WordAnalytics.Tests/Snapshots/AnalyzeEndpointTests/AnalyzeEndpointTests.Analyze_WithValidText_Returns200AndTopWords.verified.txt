@@ -1,1 +1,16 @@
-﻿{"top":[{"word":"code","count":3},{"word":"hello","count":2},{"word":"world","count":1}]}
+﻿{
+  top: [
+    {
+      word: code,
+      count: 3
+    },
+    {
+      word: hello,
+      count: 2
+    },
+    {
+      word: world,
+      count: 1
+    }
+  ]
+}
