@@ -23,7 +23,25 @@ namespace WordAnalytics.Tests.Integration
 
             var json = await httpResponse.Content.ReadAsStringAsync();
 
-            await Verifier.Verify(json);
+            await Verifier.VerifyJson(json);
+        }
+
+        [Fact]
+        public async Task Analyze_WithValidText_ReturnsExpectedJsonStructure()
+        {
+            // Arrange
+            var request = new AnalyzeRequest { Text = "Hello, hello world! Code code code." };
+
+            // Act
+            var httpResponse = await _client.PostAsJsonAsync("/api/analyze", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+
+            var json = await httpResponse.Content.ReadAsStringAsync();
+
+            await Verifier.VerifyJson(json)
+                .IgnoreMembers("count");
         }
 
         [Fact]
