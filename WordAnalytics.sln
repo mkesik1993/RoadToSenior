@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordAnalytics.Tests", "Word
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordAnalytics.Api", "Api\WordAnalytics.Api\WordAnalytics.Api.csproj", "{C688683D-B57D-4851-8B95-04A279D3617F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordAnalytics.Application", "Application\WordAnalytics.Application.csproj", "{BCFD0100-4AE2-42AA-86A4-A4AD444727D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C688683D-B57D-4851-8B95-04A279D3617F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C688683D-B57D-4851-8B95-04A279D3617F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C688683D-B57D-4851-8B95-04A279D3617F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCFD0100-4AE2-42AA-86A4-A4AD444727D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCFD0100-4AE2-42AA-86A4-A4AD444727D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCFD0100-4AE2-42AA-86A4-A4AD444727D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCFD0100-4AE2-42AA-86A4-A4AD444727D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

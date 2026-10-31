@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Application\WordAnalytics.Application.csproj" />
 	  <ProjectReference Include="..\Api\WordAnalytics.Api\WordAnalytics.Api.csproj" />
 	  <ProjectReference Include="..\Console\WordAnalytics.Cli.csproj" />
 	  <ProjectReference Include="..\Counting\WordAnalytics.Counting.csproj" />

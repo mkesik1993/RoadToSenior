@@ -3,8 +3,7 @@ using WordAnalytics.Api.Contracts.Requests;
 using WordAnalytics.Api.Contracts.Responses;
 using WordAnalytics.Api.Filters;
 using WordAnalytics.Api.Infrastructure.RateLimiting;
-using WordAnalytics.Counting.Interfaces;
-using WordAnalytics.Ranking.Interfaces;
+using WordAnalytics.Application.Features.AnalyzeText;
 
 namespace WordAnalytics.Api.Controllers
 {
@@ -26,14 +25,13 @@ namespace WordAnalytics.Api.Controllers
             return app;
         }
 
-        private static Ok<AnalyzeResponse> Analyze(AnalyzeRequest request, IWordCounter counter, IWordRanker ranker)
+        private static Ok<AnalyzeResponse> Analyze(AnalyzeRequest request, AnalyzeTextHandler handler)
         {
-            var counts = counter.CountWords(request.Text);
-            var top = ranker.GetTop(counts, request.TopCount);
+            var result = handler.Handle(new AnalyzeTextInput(request.Text, request.TopCount));
 
             var response = new AnalyzeResponse
             {
-                Top = top
+                Top = result.Top
                     .Select(kv => new WordFrequencyDto { Word = kv.Key, Count = kv.Value })
                     .ToList()
             };

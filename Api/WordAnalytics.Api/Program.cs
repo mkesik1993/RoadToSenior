@@ -2,6 +2,7 @@ using WordAnalytics.Api.Controllers;
 using WordAnalytics.Api.Infrastructure;
 using WordAnalytics.Api.Infrastructure.HealthChecks;
 using WordAnalytics.Api.Infrastructure.RateLimiting;
+using WordAnalytics.Application;
 using WordAnalytics.Counting;
 using WordAnalytics.Ranking;
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddWordCounting();
 builder.Services.AddWordRanking(builder.Configuration);
+builder.Services.AddApplication();
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
