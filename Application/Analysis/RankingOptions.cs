@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WordAnalytics.Ranking.Settings
+namespace WordAnalytics.Application.Analysis
 {
     public sealed class RankingOptions
     {

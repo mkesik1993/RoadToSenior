@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+using WordAnalytics.Application.Analysis;
 using WordAnalytics.Application.Features.AnalyzeText;
-using WordAnalytics.Counting.Services;
-using WordAnalytics.Ranking.Services;
-using WordAnalytics.Ranking.Settings;
+using WordAnalytics.Domain.Analysis;
 
 namespace WordAnalytics.Tests
 {
@@ -45,7 +44,8 @@ namespace WordAnalytics.Tests
         {
             return new AnalyzeTextHandler(
                 new WordCounter(),
-                new WordRanker(Options.Create(new RankingOptions { TopCount = topCount })),
+                new WordRanker(),
+                Options.Create(new RankingOptions { TopCount = topCount }),
                 NullLogger<AnalyzeTextHandler>.Instance);
         }
     }

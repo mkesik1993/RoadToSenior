@@ -1,15 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-using WordAnalytics.Ranking.Services;
-using WordAnalytics.Ranking.Settings;
+﻿using WordAnalytics.Domain.Analysis;
 
 namespace WordAnalytics.Tests
 {
     public class WordRankerTests
     {
-        private static WordRanker CreateService(int topCount = 3)
-        {
-            return new WordRanker(Options.Create(new RankingOptions { TopCount = topCount }));
-        }
+        private readonly WordRanker _service = new();
 
         private static Dictionary<string, int> SampleCounts() => new()
         {
@@ -22,10 +17,8 @@ namespace WordAnalytics.Tests
         [Fact]
         public void GetTop_ReturnsKeysInDescendingOrder()
         {
-            // Act
-            var top = CreateService().GetTop(SampleCounts());
+            var top = _service.GetTop(SampleCounts(), 3);
 
-            // Assert
             Assert.Equal(["code", "hello"], top.Take(2).Select(kv => kv.Key));
         }
 
@@ -33,31 +26,27 @@ namespace WordAnalytics.Tests
         [InlineData(1, 1)]
         [InlineData(3, 3)]
         [InlineData(10, 4)]
-        public void GetTop_RespectsConfiguredTopCount(int topCount, int expectedCount)
+        public void GetTop_WithExplicitLimit_ReturnsRequestedNumberOfWords(int topCount, int expectedCount)
         {
-            // Act
-            var top = CreateService(topCount).GetTop(SampleCounts());
+            var top = _service.GetTop(SampleCounts(), topCount);
 
-            // Assert
             Assert.Equal(expectedCount, top.Count);
         }
 
         [Fact]
         public void GetTop_WithEmptyCounts_ReturnsEmpty()
         {
-            // Act
-            var top = CreateService().GetTop(new Dictionary<string, int>());
+            var top = _service.GetTop(new Dictionary<string, int>(), 3);
 
-            // Assert
             Assert.Empty(top);
         }
 
         [Fact]
-        public void GetTop_WithExplicitTake_OverridesConfiguration()
+        public void GetTop_WithEqualCounts_PreservesInputOrder()
         {
-            var top = CreateService(topCount: 3).GetTop(SampleCounts(), take: 1);
+            var top = _service.GetTop(SampleCounts(), 4);
 
-            Assert.Single(top);
+            Assert.Equal(["code", "hello", "world", "extra"], top.Select(kv => kv.Key));
         }
     }
 }

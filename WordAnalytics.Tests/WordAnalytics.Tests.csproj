@@ -26,8 +26,7 @@
 	  <ProjectReference Include="..\Application\WordAnalytics.Application.csproj" />
 	  <ProjectReference Include="..\Api\WordAnalytics.Api\WordAnalytics.Api.csproj" />
 	  <ProjectReference Include="..\Console\WordAnalytics.Cli.csproj" />
-	  <ProjectReference Include="..\Counting\WordAnalytics.Counting.csproj" />
-	  <ProjectReference Include="..\Ranking\WordAnalytics.Ranking.csproj" />
+	  <ProjectReference Include="..\Domain\WordAnalytics.Domain.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

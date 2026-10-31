@@ -3,15 +3,13 @@ WORKDIR /src
 
 COPY Api/WordAnalytics.Api/WordAnalytics.Api.csproj Api/WordAnalytics.Api/
 COPY Application/WordAnalytics.Application.csproj Application/
-COPY Counting/WordAnalytics.Counting.csproj Counting/
-COPY Ranking/WordAnalytics.Ranking.csproj Ranking/
+COPY Domain/WordAnalytics.Domain.csproj Domain/
 
 RUN dotnet restore Api/WordAnalytics.Api/WordAnalytics.Api.csproj
 
 COPY Api/WordAnalytics.Api/ Api/WordAnalytics.Api/
 COPY Application/ Application/
-COPY Counting/ Counting/
-COPY Ranking/ Ranking/
+COPY Domain/ Domain/
 
 RUN dotnet publish Api/WordAnalytics.Api/WordAnalytics.Api.csproj \
     --configuration Release \

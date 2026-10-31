@@ -1,4 +1,4 @@
-﻿namespace WordAnalytics.Counting.Interfaces
+﻿namespace WordAnalytics.Domain.Analysis
 {
     public interface IWordCounter
     {

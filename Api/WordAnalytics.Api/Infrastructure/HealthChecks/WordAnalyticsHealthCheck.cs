@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using WordAnalytics.Counting.Interfaces;
-using WordAnalytics.Ranking.Interfaces;
+using WordAnalytics.Domain.Analysis;
 
 namespace WordAnalytics.Api.Infrastructure.HealthChecks
 {

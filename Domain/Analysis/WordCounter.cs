@@ -1,6 +1,4 @@
-﻿using WordAnalytics.Counting.Interfaces;
-
-namespace WordAnalytics.Counting.Services
+﻿namespace WordAnalytics.Domain.Analysis
 {
     public class WordCounter : IWordCounter
     {

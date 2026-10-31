@@ -1,4 +1,4 @@
-﻿using WordAnalytics.Counting.Services;
+﻿using WordAnalytics.Domain.Analysis;
 
 namespace WordAnalytics.Tests
 {

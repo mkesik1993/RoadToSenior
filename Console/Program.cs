@@ -2,14 +2,10 @@
 using Microsoft.Extensions.Hosting;
 using WordAnalytics.Application;
 using WordAnalytics.Application.Features.AnalyzeText;
-using WordAnalytics.Counting;
-using WordAnalytics.Ranking;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddWordCounting();
-builder.Services.AddWordRanking(builder.Configuration);
-builder.Services.AddApplication();
+builder.Services.AddApplication(builder.Configuration);
 
 using var host = builder.Build();
 

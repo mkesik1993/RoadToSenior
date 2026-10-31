@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.Extensions.Options;
+using System.Net.Http.Json;
 using WordAnalytics.Api.Contracts.Requests;
 using WordAnalytics.Api.Contracts.Responses;
 
@@ -6,6 +7,17 @@ namespace WordAnalytics.Tests.Integration
 {
     public class ConfigurationTests
     {
+        [Theory]
+        [InlineData("0")]
+        [InlineData("1001")]
+        public async Task CreateClient_WithInvalidConfiguredTopCount_RejectsStartup(string topCount)
+        {
+            await using var factory = new WordAnalyticsApiFactory()
+                .WithConfiguration("Ranking:TopCount", topCount);
+
+            Assert.Throws<OptionsValidationException>(() => factory.CreateClient());
+        }
+
         [Fact]
         public async Task TopCount_DefaultsToConfiguredValue_WhenNotProvidedInRequest()
         {
