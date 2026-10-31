@@ -1,4 +1,4 @@
-using WordAnalytics.Api.Controllers;
+using WordAnalytics.Api.Features.AnalyzeText;
 using WordAnalytics.Api.Infrastructure;
 using WordAnalytics.Api.Infrastructure.HealthChecks;
 using WordAnalytics.Api.Infrastructure.RateLimiting;
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
 app.UseRateLimiter();
 
 app.MapApiHealthChecks();
-app.MapAnalysisEndpoints();
+app.MapAnalyzeTextEndpoint();
 
 app.Run();
 

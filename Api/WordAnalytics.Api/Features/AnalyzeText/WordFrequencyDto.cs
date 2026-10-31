@@ -1,4 +1,4 @@
-﻿namespace WordAnalytics.Api.Contracts.Responses
+﻿namespace WordAnalytics.Api.Features.AnalyzeText
 {
     public class WordFrequencyDto
     {

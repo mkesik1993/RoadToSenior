@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WordAnalytics.Api.Contracts.Requests
+namespace WordAnalytics.Api.Features.AnalyzeText
 {
     public class AnalyzeRequest
     {

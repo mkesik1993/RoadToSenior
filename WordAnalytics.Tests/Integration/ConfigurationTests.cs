@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
-using WordAnalytics.Api.Contracts.Requests;
-using WordAnalytics.Api.Contracts.Responses;
+using WordAnalytics.Api.Features.AnalyzeText;
 
 namespace WordAnalytics.Tests.Integration
 {

@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using WordAnalytics.Api.Contracts.Requests;
-using WordAnalytics.Api.Contracts.Responses;
 using WordAnalytics.Api.Filters;
 using WordAnalytics.Api.Infrastructure.RateLimiting;
 using WordAnalytics.Application.Features.AnalyzeText;
 
-namespace WordAnalytics.Api.Controllers
+namespace WordAnalytics.Api.Features.AnalyzeText
 {
-    public static class AnalysisController
+    public static class AnalyzeTextEndpoint
     {
-        public static IEndpointRouteBuilder MapAnalysisEndpoints(this IEndpointRouteBuilder app)
+        public static IEndpointRouteBuilder MapAnalyzeTextEndpoint(this IEndpointRouteBuilder app)
         {
             var group = app.MapGroup("/api")
                 .WithTags("Analysis");
