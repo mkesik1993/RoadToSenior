@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WordAnalytics.Application.Analysis;
 using WordAnalytics.Application.Features.AnalyzeText;
+using WordAnalytics.Application.Features.CountWords;
 using WordAnalytics.Domain.Analysis;
 
 namespace WordAnalytics.Application;
@@ -18,6 +19,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddSingleton<IWordCounter, WordCounter>();
         services.AddSingleton<IWordRanker, WordRanker>();
         services.AddSingleton<AnalyzeTextHandler>();
+        services.AddSingleton<CountWordsHandler>();
         return services;
     }
 }

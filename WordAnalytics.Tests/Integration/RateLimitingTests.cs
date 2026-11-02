@@ -15,6 +15,22 @@ namespace WordAnalytics.Tests.Integration
         private static Task<HttpResponseMessage> PostAnalyze(HttpClient client)
             => client.PostAsJsonAsync("/api/analyze", new AnalyzeRequest { Text = "hello world" });
 
+        [Theory]
+        [InlineData("/api/word-counts", "/api/analyze")]
+        [InlineData("/api/analyze", "/api/word-counts")]
+        public async Task AnalysisEndpoints_WithSharedIp_ConsumeSameLimit(string firstPath, string secondPath)
+        {
+            await using var factory = CreateFactory(permitLimit: 1);
+            using var client = factory.CreateClient();
+
+            var first = await client.PostAsJsonAsync(firstPath, new { Text = "hello world" });
+            var second = await client.PostAsJsonAsync(secondPath, new { Text = "hello world" });
+
+            Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+            Assert.Equal(HttpStatusCode.TooManyRequests, second.StatusCode);
+            Assert.True(second.Headers.Contains("Retry-After"));
+        }
+
         [Fact]
         public async Task Analyze_WithinLimit_Returns200()
         {
