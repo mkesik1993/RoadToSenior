@@ -15,16 +15,23 @@ namespace WordAnalytics.Tests.Integration
         private static Task<HttpResponseMessage> PostAnalyze(HttpClient client)
             => client.PostAsJsonAsync("/api/analyze", new AnalyzeRequest { Text = "hello world" });
 
+        private static object BodyFor(string path)
+            => path == "/api/top-words"
+                ? new { Counts = new[] { new { Word = "hello", Count = 1 } } }
+                : new { Text = "hello world" };
+
         [Theory]
         [InlineData("/api/word-counts", "/api/analyze")]
         [InlineData("/api/analyze", "/api/word-counts")]
+        [InlineData("/api/word-counts", "/api/top-words")]
+        [InlineData("/api/top-words", "/api/analyze")]
         public async Task AnalysisEndpoints_WithSharedIp_ConsumeSameLimit(string firstPath, string secondPath)
         {
             await using var factory = CreateFactory(permitLimit: 1);
             using var client = factory.CreateClient();
 
-            var first = await client.PostAsJsonAsync(firstPath, new { Text = "hello world" });
-            var second = await client.PostAsJsonAsync(secondPath, new { Text = "hello world" });
+            var first = await client.PostAsJsonAsync(firstPath, BodyFor(firstPath));
+            var second = await client.PostAsJsonAsync(secondPath, BodyFor(secondPath));
 
             Assert.Equal(HttpStatusCode.OK, first.StatusCode);
             Assert.Equal(HttpStatusCode.TooManyRequests, second.StatusCode);
