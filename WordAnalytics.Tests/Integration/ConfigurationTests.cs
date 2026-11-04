@@ -11,10 +11,15 @@ namespace WordAnalytics.Tests.Integration
         [InlineData("1001")]
         public async Task CreateClient_WithInvalidConfiguredTopCount_RejectsStartup(string topCount)
         {
+            // Arrange
             await using var factory = new WordAnalyticsApiFactory()
                 .WithConfiguration("Ranking:TopCount", topCount);
 
-            Assert.Throws<OptionsValidationException>(() => factory.CreateClient());
+            // Act
+            var createClient = () => factory.CreateClient();
+
+            // Assert
+            Assert.Throws<OptionsValidationException>(createClient);
         }
 
         [Fact]

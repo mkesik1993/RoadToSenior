@@ -10,8 +10,13 @@ public class CountWordsHandlerTests
     [Fact]
     public void Handle_WithSeveralDistinctWords_ReturnsAllCountsInInputOrder()
     {
-        var result = _handler.Handle(new CountWordsInput("first second second third fourth fifth"));
+        // Arrange
+        var input = new CountWordsInput("first second second third fourth fifth");
 
+        // Act
+        var result = _handler.Handle(input);
+
+        // Assert
         Assert.Equal(
             [
                 new KeyValuePair<string, int>("first", 1),
@@ -30,8 +35,13 @@ public class CountWordsHandlerTests
     [InlineData("!!! ...")]
     public void Handle_WithNoWords_ReturnsEmpty(string? text)
     {
-        var result = _handler.Handle(new CountWordsInput(text));
+        // Arrange
+        var input = new CountWordsInput(text);
 
+        // Act
+        var result = _handler.Handle(input);
+
+        // Assert
         Assert.Empty(result.Counts);
     }
 }

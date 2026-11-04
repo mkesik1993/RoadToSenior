@@ -54,7 +54,9 @@ namespace WordAnalytics.Tests.Integration
         {
             // Act & Assert
             public Dictionary<string, int> CountWords(string? text)
-                => throw new InvalidOperationException("Simulated failure.");
+            {
+                throw new InvalidOperationException("Simulated failure.");
+            }
         }
     }
 }

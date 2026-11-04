@@ -16,51 +16,83 @@ public class GetTopWordsHandlerTests
     ];
 
     private static GetTopWordsHandler CreateHandler(int defaultTopCount = 3)
-        => new(new WordRanker(), Options.Create(new RankingOptions { TopCount = defaultTopCount }));
+    {
+        return new GetTopWordsHandler(
+            new WordRanker(),
+            Options.Create(new RankingOptions { TopCount = defaultTopCount }));
+    }
 
     [Fact]
     public void Handle_WithExplicitTopCount_ReturnsOrderedTopWithStableTies()
     {
-        var result = CreateHandler().Handle(new GetTopWordsInput(Counts, 3));
+        // Arrange
+        var handler = CreateHandler();
+        var input = new GetTopWordsInput(Counts, 3);
 
+        // Act
+        var result = handler.Handle(input);
+
+        // Assert
         Assert.Equal([new("e", 5), new("b", 3), new("c", 3)], result.Top);
     }
 
     [Fact]
     public void Handle_WithoutTopCount_UsesConfiguredDefault()
     {
-        var result = CreateHandler(defaultTopCount: 2).Handle(new GetTopWordsInput(Counts, null));
+        // Arrange
+        var handler = CreateHandler(defaultTopCount: 2);
+        var input = new GetTopWordsInput(Counts, null);
 
+        // Act
+        var result = handler.Handle(input);
+
+        // Assert
         Assert.Equal(2, result.Top.Count);
     }
 
     [Fact]
     public void Handle_WithTopCountAboveAvailable_ReturnsAll()
     {
-        var result = CreateHandler().Handle(new GetTopWordsInput(Counts, 100));
+        // Arrange
+        var handler = CreateHandler();
+        var input = new GetTopWordsInput(Counts, 100);
 
+        // Act
+        var result = handler.Handle(input);
+
+        // Assert
         Assert.Equal(Counts.Length, result.Top.Count);
     }
 
     [Fact]
     public void Handle_WithNoCounts_ReturnsEmpty()
     {
-        var result = CreateHandler().Handle(new GetTopWordsInput([], null));
+        // Arrange
+        var handler = CreateHandler();
+        var input = new GetTopWordsInput([], null);
 
+        // Act
+        var result = handler.Handle(input);
+
+        // Assert
         Assert.Empty(result.Top);
     }
 
     [Fact]
     public void Handle_AfterCountWords_MatchesAnalyzeText()
     {
+        // Arrange
         const string text = "World, hello HELLO! Code code code. extra another.";
         var counter = new WordCounter();
         var counts = new CountWordsHandler(counter).Handle(new CountWordsInput(text)).Counts;
         var analyzeHandler = new AnalyzeTextHandler(
             counter, new WordRanker(), Options.Create(new RankingOptions()), NullLogger<AnalyzeTextHandler>.Instance);
 
+        // Act
         var result = CreateHandler().Handle(new GetTopWordsInput(counts, 3));
+        var expected = analyzeHandler.Handle(new AnalyzeTextInput(text, 3));
 
-        Assert.Equal(analyzeHandler.Handle(new AnalyzeTextInput(text, 3)).Top, result.Top);
+        // Assert
+        Assert.Equal(expected.Top, result.Top);
     }
 }

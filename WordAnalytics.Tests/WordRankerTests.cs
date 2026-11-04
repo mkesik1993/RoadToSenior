@@ -6,19 +6,27 @@ namespace WordAnalytics.Tests
     {
         private readonly WordRanker _service = new();
 
-        private static Dictionary<string, int> SampleCounts() => new()
+        private static Dictionary<string, int> SampleCounts()
         {
-            ["code"] = 3,
-            ["hello"] = 2,
-            ["world"] = 1,
-            ["extra"] = 1
-        };
+            return new Dictionary<string, int>
+            {
+                ["code"] = 3,
+                ["hello"] = 2,
+                ["world"] = 1,
+                ["extra"] = 1
+            };
+        }
 
         [Fact]
         public void GetTop_ReturnsKeysInDescendingOrder()
         {
-            var top = _service.GetTop(SampleCounts(), 3);
+            // Arrange
+            var counts = SampleCounts();
 
+            // Act
+            var top = _service.GetTop(counts, 3);
+
+            // Assert
             Assert.Equal(["code", "hello"], top.Take(2).Select(kv => kv.Key));
         }
 
@@ -28,24 +36,39 @@ namespace WordAnalytics.Tests
         [InlineData(10, 4)]
         public void GetTop_WithExplicitLimit_ReturnsRequestedNumberOfWords(int topCount, int expectedCount)
         {
-            var top = _service.GetTop(SampleCounts(), topCount);
+            // Arrange
+            var counts = SampleCounts();
 
+            // Act
+            var top = _service.GetTop(counts, topCount);
+
+            // Assert
             Assert.Equal(expectedCount, top.Count);
         }
 
         [Fact]
         public void GetTop_WithEmptyCounts_ReturnsEmpty()
         {
-            var top = _service.GetTop(new Dictionary<string, int>(), 3);
+            // Arrange
+            var counts = new Dictionary<string, int>();
 
+            // Act
+            var top = _service.GetTop(counts, 3);
+
+            // Assert
             Assert.Empty(top);
         }
 
         [Fact]
         public void GetTop_WithEqualCounts_PreservesInputOrder()
         {
-            var top = _service.GetTop(SampleCounts(), 4);
+            // Arrange
+            var counts = SampleCounts();
 
+            // Act
+            var top = _service.GetTop(counts, 4);
+
+            // Assert
             Assert.Equal(["code", "hello", "world", "extra"], top.Select(kv => kv.Key));
         }
     }

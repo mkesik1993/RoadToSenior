@@ -17,9 +17,13 @@ public class CountWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFi
     [Fact]
     public async Task CountWords_WithValidText_ReturnsAllCounts()
     {
-        var response = await _client.PostAsJsonAsync("/api/word-counts",
-            new CountWordsRequest { Text = "World, hello HELLO! Code code code. extra another." });
+        // Arrange
+        var request = new CountWordsRequest { Text = "World, hello HELLO! Code code code. extra another." };
 
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/word-counts", request);
+
+        // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         await Verifier.VerifyJson(await response.Content.ReadAsStringAsync());
@@ -28,10 +32,14 @@ public class CountWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFi
     [Fact]
     public async Task CountWords_WithPunctuationOnly_ReturnsEmptyCounts()
     {
-        var response = await _client.PostAsJsonAsync("/api/word-counts",
-            new CountWordsRequest { Text = "!!! ..." });
+        // Arrange
+        var request = new CountWordsRequest { Text = "!!! ..." };
+
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/word-counts", request);
         var result = await response.Content.ReadFromJsonAsync<CountWordsResponse>();
 
+        // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(result);
         Assert.Empty(result.Counts);
@@ -44,11 +52,14 @@ public class CountWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFi
     [InlineData("{\"text\":\"   \"}")]
     public async Task CountWords_WithMissingOrBlankText_Returns400(string json)
     {
+        // Arrange
         using var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+        // Act
         var response = await _client.PostAsync("/api/word-counts", content);
         var problem = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
 
+        // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         Assert.NotNull(problem);
         Assert.True(problem.Errors.ContainsKey("Text"));
@@ -57,10 +68,14 @@ public class CountWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFi
     [Fact]
     public async Task CountWords_WithTooLongText_Returns400()
     {
-        var response = await _client.PostAsJsonAsync("/api/word-counts",
-            new CountWordsRequest { Text = new string('a', 1_000_001) });
+        // Arrange
+        var request = new CountWordsRequest { Text = new string('a', 1_000_001) };
+
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/word-counts", request);
         var problem = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
 
+        // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         Assert.NotNull(problem);
         Assert.True(problem.Errors.ContainsKey("Text"));
@@ -69,6 +84,7 @@ public class CountWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFi
     [Fact]
     public async Task CountWords_WhenCounterFails_ReturnsGeneric500()
     {
+        // Arrange
         var counter = new Mock<IWordCounter>();
         counter.Setup(service => service.CountWords(It.IsAny<string?>()))
             .Throws(new InvalidOperationException("Simulated counter failure."));
@@ -80,11 +96,13 @@ public class CountWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFi
                 services.AddSingleton<IWordCounter>(counter.Object);
             });
         using var client = failingFactory.CreateClient();
+        var request = new CountWordsRequest { Text = "hello" };
 
-        var response = await client.PostAsJsonAsync("/api/word-counts",
-            new CountWordsRequest { Text = "hello" });
+        // Act
+        var response = await client.PostAsJsonAsync("/api/word-counts", request);
         var problem = await response.Content.ReadFromJsonAsync<ProblemDetails>();
 
+        // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
         Assert.NotNull(problem);
         Assert.Equal("An unexpected error occurred.", problem.Title);
