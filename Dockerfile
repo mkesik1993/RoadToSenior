@@ -2,14 +2,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 COPY Api/WordAnalytics.Api/WordAnalytics.Api.csproj Api/WordAnalytics.Api/
-COPY Counting/WordAnalytics.Counting.csproj Counting/
-COPY Ranking/WordAnalytics.Ranking.csproj Ranking/
+COPY Application/WordAnalytics.Application.csproj Application/
+COPY Domain/WordAnalytics.Domain.csproj Domain/
 
 RUN dotnet restore Api/WordAnalytics.Api/WordAnalytics.Api.csproj
 
 COPY Api/WordAnalytics.Api/ Api/WordAnalytics.Api/
-COPY Counting/ Counting/
-COPY Ranking/ Ranking/
+COPY Application/ Application/
+COPY Domain/ Domain/
 
 RUN dotnet publish Api/WordAnalytics.Api/WordAnalytics.Api.csproj \
     --configuration Release \

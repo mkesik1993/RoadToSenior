@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using WordAnalytics.Counting.Interfaces;
+using WordAnalytics.Domain.Analysis;
 
 namespace WordAnalytics.Tests.Integration
 {
@@ -54,7 +54,9 @@ namespace WordAnalytics.Tests.Integration
         {
             // Act & Assert
             public Dictionary<string, int> CountWords(string? text)
-                => throw new InvalidOperationException("Simulated failure.");
+            {
+                throw new InvalidOperationException("Simulated failure.");
+            }
         }
     }
 }

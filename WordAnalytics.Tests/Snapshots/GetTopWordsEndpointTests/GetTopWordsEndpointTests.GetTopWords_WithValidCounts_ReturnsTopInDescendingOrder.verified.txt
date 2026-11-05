@@ -1,0 +1,20 @@
+﻿{
+  top: [
+    {
+      word: e,
+      count: 5
+    },
+    {
+      word: b,
+      count: 3
+    },
+    {
+      word: c,
+      count: 3
+    },
+    {
+      word: d,
+      count: 2
+    }
+  ]
+}

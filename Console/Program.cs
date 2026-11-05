@@ -1,24 +1,21 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WordAnalytics.Cli;
-using WordAnalytics.Counting;
-using WordAnalytics.Ranking;
+using WordAnalytics.Application;
+using WordAnalytics.Application.Features.AnalyzeText;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddWordCounting();
-builder.Services.AddWordRanking(builder.Configuration);
-builder.Services.AddSingleton<TextAnalysisService>();
+builder.Services.AddApplication(builder.Configuration);
 
 using var host = builder.Build();
 
 Console.WriteLine("Your text:");
 var input = Console.ReadLine();
 
-var analysis = host.Services.GetRequiredService<TextAnalysisService>();
-var words = analysis.Analyze(input);
+var analysis = host.Services.GetRequiredService<AnalyzeTextHandler>();
+var result = analysis.Handle(new AnalyzeTextInput(input));
 
-foreach (var (word, count) in words)
+foreach (var (word, count) in result.Top)
 {
     Console.WriteLine($"{word} ({count})");
 }

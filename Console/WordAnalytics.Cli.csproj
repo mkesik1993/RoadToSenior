@@ -12,8 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Counting\WordAnalytics.Counting.csproj" />
-	  <ProjectReference Include="..\Ranking\WordAnalytics.Ranking.csproj" />
+	  <ProjectReference Include="..\Application\WordAnalytics.Application.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

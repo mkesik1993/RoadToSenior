@@ -1,11 +1,27 @@
-﻿using System.Net.Http.Json;
-using WordAnalytics.Api.Contracts.Requests;
-using WordAnalytics.Api.Contracts.Responses;
+﻿using Microsoft.Extensions.Options;
+using System.Net.Http.Json;
+using WordAnalytics.Api.Features.AnalyzeText;
 
 namespace WordAnalytics.Tests.Integration
 {
     public class ConfigurationTests
     {
+        [Theory]
+        [InlineData("0")]
+        [InlineData("1001")]
+        public async Task CreateClient_WithInvalidConfiguredTopCount_RejectsStartup(string topCount)
+        {
+            // Arrange
+            await using var factory = new WordAnalyticsApiFactory()
+                .WithConfiguration("Ranking:TopCount", topCount);
+
+            // Act
+            var createClient = () => factory.CreateClient();
+
+            // Assert
+            Assert.Throws<OptionsValidationException>(createClient);
+        }
+
         [Fact]
         public async Task TopCount_DefaultsToConfiguredValue_WhenNotProvidedInRequest()
         {
