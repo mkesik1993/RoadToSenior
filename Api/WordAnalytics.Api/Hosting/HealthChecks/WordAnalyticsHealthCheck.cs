@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using WordAnalytics.Domain.Analysis;
 
-namespace WordAnalytics.Api.Infrastructure.HealthChecks
+namespace WordAnalytics.Api.Hosting.HealthChecks
 {
     public class WordAnalyticsHealthCheck(IWordCounter counter, IWordRanker ranker) : IHealthCheck
     {

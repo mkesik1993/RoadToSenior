@@ -9,8 +9,7 @@ namespace WordAnalytics.Application.Features.CreateAnalysis;
 public class CreateAnalysisHandler(
     AnalyzeTextHandler analyzeTextHandler,
     IAnalysisStore analysisStore,
-    IOptions<RankingOptions> options,
-    TimeProvider timeProvider)
+    IOptions<RankingOptions> options)
 {
     private readonly RankingOptions _options = options.Value;
 
@@ -20,10 +19,11 @@ public class CreateAnalysisHandler(
 
         var topCount = input.TopCount ?? _options.TopCount;
         var analysisResult = analyzeTextHandler.Handle(new AnalyzeTextInput(input.Text, topCount));
+
         var analysis = TextAnalysis.Create(
             Guid.NewGuid(),
             input.Text,
-            timeProvider.GetUtcNow(),
+            DateTimeOffset.UtcNow,
             topCount,
             analysisResult.Top);
 

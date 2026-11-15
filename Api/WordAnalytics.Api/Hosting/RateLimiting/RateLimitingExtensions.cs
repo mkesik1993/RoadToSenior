@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Threading.RateLimiting;
 
-namespace WordAnalytics.Api.Infrastructure.RateLimiting
+namespace WordAnalytics.Api.Hosting.RateLimiting
 {
     public static class RateLimitingExtensions
     {

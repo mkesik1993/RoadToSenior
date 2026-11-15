@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WordAnalytics.Api.Infrastructure
+namespace WordAnalytics.Api.Hosting
 {
     public sealed class GlobalExceptionHandler : IExceptionHandler
     {

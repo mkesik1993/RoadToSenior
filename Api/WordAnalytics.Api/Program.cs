@@ -3,11 +3,11 @@ using WordAnalytics.Api.Features.CreateAnalysis;
 using WordAnalytics.Api.Features.CountWords;
 using WordAnalytics.Api.Features.GetAnalysis;
 using WordAnalytics.Api.Features.GetTopWords;
-using WordAnalytics.Api.Infrastructure;
-using WordAnalytics.Api.Infrastructure.HealthChecks;
-using WordAnalytics.Api.Infrastructure.RateLimiting;
 using WordAnalytics.Application;
 using WordAnalytics.Infrastructure;
+using WordAnalytics.Api.Hosting;
+using WordAnalytics.Api.Hosting.HealthChecks;
+using WordAnalytics.Api.Hosting.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 

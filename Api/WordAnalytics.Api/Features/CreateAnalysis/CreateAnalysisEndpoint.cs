@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using WordAnalytics.Api.Features.Analyses;
 using WordAnalytics.Api.Features.GetAnalysis;
 using WordAnalytics.Api.Filters;
-using WordAnalytics.Api.Infrastructure.RateLimiting;
+using WordAnalytics.Api.Hosting.RateLimiting;
 using WordAnalytics.Application.Features.CreateAnalysis;
 
 namespace WordAnalytics.Api.Features.CreateAnalysis;

@@ -34,30 +34,25 @@ public class TextAnalysis
     {
         if (id == Guid.Empty)
         {
-            throw new ArgumentException("Analysis ID cannot be empty.", nameof(id));
+            throw new ArgumentException("Analysis ID cannot be empty.");
         }
 
         if (string.IsNullOrWhiteSpace(text))
         {
-            throw new ArgumentException("Analysis text is required.", nameof(text));
+            throw new ArgumentException("Analysis text is required.");
         }
 
         if (text.Length > MaxTextLength)
         {
-            throw new ArgumentException(
-                $"Analysis text cannot exceed {MaxTextLength} characters.",
-                nameof(text));
+            throw new ArgumentException($"Analysis text cannot exceed {MaxTextLength} characters.");
         }
 
         if (createdAtUtc.Offset != TimeSpan.Zero)
         {
-            throw new ArgumentException("Analysis creation time must be UTC.", nameof(createdAtUtc));
+            throw new ArgumentException("Analysis creation time must be UTC.");
         }
 
-        if (topCount < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(topCount), "TopCount must be greater than zero.");
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(topCount, 1);
 
         ArgumentNullException.ThrowIfNull(topWords);
 
@@ -65,7 +60,7 @@ public class TextAnalysis
 
         if (words.Length > topCount)
         {
-            throw new ArgumentException("Top words cannot exceed TopCount.", nameof(topWords));
+            throw new ArgumentException("Top words cannot exceed TopCount.");
         }
 
         var seenWords = new HashSet<string>(StringComparer.Ordinal);
@@ -74,17 +69,17 @@ public class TextAnalysis
         {
             if (string.IsNullOrWhiteSpace(word))
             {
-                throw new ArgumentException("Top words cannot be empty.", nameof(topWords));
+                throw new ArgumentException("Top words cannot be empty.");
             }
 
             if (count < 1)
             {
-                throw new ArgumentException("Word counts must be greater than zero.", nameof(topWords));
+                throw new ArgumentException("Word counts must be greater than zero.");
             }
 
             if (!seenWords.Add(word))
             {
-                throw new ArgumentException("Top words must be unique.", nameof(topWords));
+                throw new ArgumentException("Top words must be unique.");
             }
         }
 

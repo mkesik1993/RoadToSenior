@@ -2,7 +2,7 @@
 {
     public class WordCounter : IWordCounter
     {
-        public Dictionary<string, int> CountWords(string? input)
+        public IReadOnlyDictionary<string, int> CountWords(string? input)
         {
             if (string.IsNullOrWhiteSpace(input))
                 return new Dictionary<string, int>();

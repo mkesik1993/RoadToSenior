@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace WordAnalytics.Api.Infrastructure.HealthChecks
+namespace WordAnalytics.Api.Hosting.HealthChecks
 {
     public static class HealthCheckExtensions
     {

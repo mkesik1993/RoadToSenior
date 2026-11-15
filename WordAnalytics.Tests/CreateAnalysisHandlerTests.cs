@@ -9,8 +9,6 @@ namespace WordAnalytics.Tests;
 
 public class CreateAnalysisHandlerTests
 {
-    private static readonly DateTimeOffset CreatedAtUtc = new(2026, 11, 12, 8, 0, 0, TimeSpan.Zero);
-
     [Fact]
     public async Task HandleAsync_WithExplicitTopCount_SavesAnalysisWithInputAndRankedWords()
     {
@@ -25,7 +23,6 @@ public class CreateAnalysisHandlerTests
         // Assert
         Assert.NotEqual(Guid.Empty, result.Id);
         Assert.Equal(input.Text, result.Text);
-        Assert.Equal(CreatedAtUtc, result.CreatedAtUtc);
         Assert.Equal(2, result.TopCount);
         Assert.Equal(
             [new KeyValuePair<string, int>("hello", 2), new("world", 1)],
@@ -68,31 +65,25 @@ public class CreateAnalysisHandlerTests
     }
 
     [Fact]
-    public async Task HandleAsync_WithSubMicrosecondTime_PreservesTimestampPrecision()
+    public async Task HandleAsync_UsesCurrentUtcTimeAndStoresIt()
     {
         // Arrange
         var store = new FakeAnalysisStore();
-        var timeWithSubMicrosecondTicks = CreatedAtUtc.AddTicks(7);
-        var handler = CreateHandler(store, timeWithSubMicrosecondTicks);
+        var handler = CreateHandler(store);
+        var timeBeforeHandling = DateTimeOffset.UtcNow;
 
         // Act
         var result = await handler.HandleAsync(new CreateAnalysisInput("hello"));
+        var timeAfterHandling = DateTimeOffset.UtcNow;
 
         // Assert
-        Assert.Equal(timeWithSubMicrosecondTicks, result.CreatedAtUtc);
-        Assert.Equal(timeWithSubMicrosecondTicks, store.LastAdded?.CreatedAtUtc);
+        Assert.InRange(result.CreatedAtUtc, timeBeforeHandling, timeAfterHandling);
+        Assert.Equal(TimeSpan.Zero, result.CreatedAtUtc.Offset);
+        Assert.Equal(result.CreatedAtUtc, store.LastAdded?.CreatedAtUtc);
     }
 
     private static CreateAnalysisHandler CreateHandler(
         FakeAnalysisStore store,
-        int defaultTopCount = 3)
-    {
-        return CreateHandler(store, CreatedAtUtc, defaultTopCount);
-    }
-
-    private static CreateAnalysisHandler CreateHandler(
-        FakeAnalysisStore store,
-        DateTimeOffset utcNow,
         int defaultTopCount = 3)
     {
         var analyzeTextHandler = new AnalyzeTextHandler(
@@ -104,15 +95,6 @@ public class CreateAnalysisHandlerTests
         return new CreateAnalysisHandler(
             analyzeTextHandler,
             store,
-            Options.Create(new RankingOptions { TopCount = defaultTopCount }),
-            new FixedTimeProvider(utcNow));
-    }
-
-    private class FixedTimeProvider(DateTimeOffset utcNow) : TimeProvider
-    {
-        public override DateTimeOffset GetUtcNow()
-        {
-            return utcNow;
-        }
+            Options.Create(new RankingOptions { TopCount = defaultTopCount }));
     }
 }
