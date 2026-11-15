@@ -12,7 +12,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
       Ranking__TopCount: "3"
       RateLimiting__PermitLimit: "10"
       RateLimiting__WindowSeconds: "60"
