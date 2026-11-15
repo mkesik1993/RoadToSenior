@@ -67,8 +67,32 @@ public class CreateAnalysisHandlerTests
         Assert.Equal(cancellationSource.Token, store.AddCancellationToken);
     }
 
+    [Fact]
+    public async Task HandleAsync_WithSubMicrosecondTime_PreservesTimestampPrecision()
+    {
+        // Arrange
+        var store = new FakeAnalysisStore();
+        var timeWithSubMicrosecondTicks = CreatedAtUtc.AddTicks(7);
+        var handler = CreateHandler(store, timeWithSubMicrosecondTicks);
+
+        // Act
+        var result = await handler.HandleAsync(new CreateAnalysisInput("hello"));
+
+        // Assert
+        Assert.Equal(timeWithSubMicrosecondTicks, result.CreatedAtUtc);
+        Assert.Equal(timeWithSubMicrosecondTicks, store.LastAdded?.CreatedAtUtc);
+    }
+
     private static CreateAnalysisHandler CreateHandler(
         FakeAnalysisStore store,
+        int defaultTopCount = 3)
+    {
+        return CreateHandler(store, CreatedAtUtc, defaultTopCount);
+    }
+
+    private static CreateAnalysisHandler CreateHandler(
+        FakeAnalysisStore store,
+        DateTimeOffset utcNow,
         int defaultTopCount = 3)
     {
         var analyzeTextHandler = new AnalyzeTextHandler(
@@ -81,7 +105,7 @@ public class CreateAnalysisHandlerTests
             analyzeTextHandler,
             store,
             Options.Create(new RankingOptions { TopCount = defaultTopCount }),
-            new FixedTimeProvider(CreatedAtUtc));
+            new FixedTimeProvider(utcNow));
     }
 
     private class FixedTimeProvider(DateTimeOffset utcNow) : TimeProvider

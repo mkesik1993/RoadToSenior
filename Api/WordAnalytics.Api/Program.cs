@@ -5,10 +5,12 @@ using WordAnalytics.Api.Infrastructure;
 using WordAnalytics.Api.Infrastructure.HealthChecks;
 using WordAnalytics.Api.Infrastructure.RateLimiting;
 using WordAnalytics.Application;
+using WordAnalytics.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

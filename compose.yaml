@@ -1,3 +1,5 @@
+name: wordanalytics-database-training
+
 services:
   api:
     build:
@@ -6,9 +8,31 @@ services:
     image: wordanalytics-api:local
     ports:
       - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       Ranking__TopCount: "3"
       RateLimiting__PermitLimit: "10"
       RateLimiting__WindowSeconds: "60"
       RateLimiting__QueueLimit: "0"
+      ConnectionStrings__WordAnalytics: "Host=postgres;Port=5432;Database=wordanalytics;Username=wordanalytics;Password=wordanalytics-local-only"
+  postgres:
+    image: postgres:17-alpine
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      POSTGRES_DB: wordanalytics
+      POSTGRES_USER: wordanalytics
+      POSTGRES_PASSWORD: wordanalytics-local-only
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wordanalytics -d wordanalytics"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
