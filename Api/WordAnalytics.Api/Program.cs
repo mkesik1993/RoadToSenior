@@ -1,5 +1,7 @@
 using WordAnalytics.Api.Features.AnalyzeText;
+using WordAnalytics.Api.Features.CreateAnalysis;
 using WordAnalytics.Api.Features.CountWords;
+using WordAnalytics.Api.Features.GetAnalysis;
 using WordAnalytics.Api.Features.GetTopWords;
 using WordAnalytics.Api.Infrastructure;
 using WordAnalytics.Api.Infrastructure.HealthChecks;
@@ -36,7 +38,9 @@ app.UseRateLimiter();
 
 app.MapApiHealthChecks();
 app.MapAnalyzeTextEndpoint();
+app.MapCreateAnalysisEndpoint();
 app.MapCountWordsEndpoint();
+app.MapGetAnalysisEndpoint();
 app.MapGetTopWordsEndpoint();
 
 app.Run();

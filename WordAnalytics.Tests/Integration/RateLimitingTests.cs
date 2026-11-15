@@ -1,7 +1,10 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using WordAnalytics.Api.Features.AnalyzeText;
+using WordAnalytics.Application.AnalysisHistory;
 
 namespace WordAnalytics.Tests.Integration
 {
@@ -11,7 +14,12 @@ namespace WordAnalytics.Tests.Integration
         {
             return new WordAnalyticsApiFactory()
                 .WithConfiguration("RateLimiting:PermitLimit", permitLimit.ToString())
-                .WithConfiguration("RateLimiting:WindowSeconds", "3600");
+                .WithConfiguration("RateLimiting:WindowSeconds", "3600")
+                .WithServices(services =>
+                {
+                    services.RemoveAll<IAnalysisStore>();
+                    services.AddSingleton<IAnalysisStore>(new FakeAnalysisStore());
+                });
         }
 
         private static Task<HttpResponseMessage> PostAnalyze(HttpClient client)
@@ -38,6 +46,8 @@ namespace WordAnalytics.Tests.Integration
         [InlineData("/api/analyze", "/api/word-counts")]
         [InlineData("/api/word-counts", "/api/top-words")]
         [InlineData("/api/top-words", "/api/analyze")]
+        [InlineData("/api/analyses", "/api/analyze")]
+        [InlineData("/api/analyze", "/api/analyses")]
         public async Task AnalysisEndpoints_WithSharedIp_ConsumeSameLimit(string firstPath, string secondPath)
         {
             // Arrange
@@ -51,7 +61,10 @@ namespace WordAnalytics.Tests.Integration
             var second = await client.PostAsJsonAsync(secondPath, secondBody);
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+            var expectedFirstStatusCode = firstPath == "/api/analyses"
+                ? HttpStatusCode.Created
+                : HttpStatusCode.OK;
+            Assert.Equal(expectedFirstStatusCode, first.StatusCode);
             Assert.Equal(HttpStatusCode.TooManyRequests, second.StatusCode);
             Assert.True(second.Headers.Contains("Retry-After"));
         }
