@@ -6,9 +6,10 @@ using System.Net.Http.Json;
 using WordAnalytics.Api.Features.Analyses;
 using WordAnalytics.Api.Features.CreateAnalysis;
 using WordAnalytics.Application.AnalysisHistory;
-using WordAnalytics.Tests;
+using WordAnalytics.Tests.Integration.TestSupport;
+using WordAnalytics.Tests.TestSupport;
 
-namespace WordAnalytics.Tests.Integration;
+namespace WordAnalytics.Tests.Integration.Api;
 
 public class SavedAnalysisEndpointsTests
 {

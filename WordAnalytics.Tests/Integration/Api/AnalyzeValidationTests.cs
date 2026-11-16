@@ -4,7 +4,9 @@ using System.Net.Http.Json;
 using System.Text;
 using WordAnalytics.Api.Features.AnalyzeText;
 
-namespace WordAnalytics.Tests.Integration
+using WordAnalytics.Tests.Integration.TestSupport;
+
+namespace WordAnalytics.Tests.Integration.Api
 {
     public class AnalyzeValidationTests(WordAnalyticsApiFactory factory) : IClassFixture<WordAnalyticsApiFactory>
     {

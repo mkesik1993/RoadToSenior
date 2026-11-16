@@ -5,8 +5,10 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using WordAnalytics.Api.Features.AnalyzeText;
 using WordAnalytics.Application.AnalysisHistory;
+using WordAnalytics.Tests.Integration.TestSupport;
+using WordAnalytics.Tests.TestSupport;
 
-namespace WordAnalytics.Tests.Integration
+namespace WordAnalytics.Tests.Integration.Api
 {
     public class RateLimitingTests
     {

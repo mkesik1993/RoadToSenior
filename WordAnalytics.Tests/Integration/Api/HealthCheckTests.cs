@@ -4,8 +4,9 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using WordAnalytics.Domain.Analysis;
+using WordAnalytics.Tests.Integration.TestSupport;
 
-namespace WordAnalytics.Tests.Integration
+namespace WordAnalytics.Tests.Integration.Api
 {
     public class HealthCheckTests(WordAnalyticsApiFactory factory) : IClassFixture<WordAnalyticsApiFactory>
     {

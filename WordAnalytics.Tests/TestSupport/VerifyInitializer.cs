@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace WordAnalytics.Tests
+namespace WordAnalytics.Tests.TestSupport
 {
     public static class VerifyInitializer
     {

@@ -4,8 +4,9 @@ using WordAnalytics.Application.Analysis;
 using WordAnalytics.Application.Features.AnalyzeText;
 using WordAnalytics.Application.Features.CreateAnalysis;
 using WordAnalytics.Domain.Analysis;
+using WordAnalytics.Tests.TestSupport;
 
-namespace WordAnalytics.Tests;
+namespace WordAnalytics.Tests.Unit.Application;
 
 public class CreateAnalysisHandlerTests
 {

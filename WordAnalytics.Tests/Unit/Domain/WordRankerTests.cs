@@ -1,6 +1,6 @@
 ﻿using WordAnalytics.Domain.Analysis;
 
-namespace WordAnalytics.Tests
+namespace WordAnalytics.Tests.Unit.Domain
 {
     public class WordRankerTests
     {

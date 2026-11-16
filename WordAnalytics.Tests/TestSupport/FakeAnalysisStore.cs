@@ -1,7 +1,7 @@
 using WordAnalytics.Application.AnalysisHistory;
 using WordAnalytics.Domain.Analysis;
 
-namespace WordAnalytics.Tests;
+namespace WordAnalytics.Tests.TestSupport;
 
 internal class FakeAnalysisStore : IAnalysisStore
 {

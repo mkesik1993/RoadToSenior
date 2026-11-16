@@ -1,7 +1,8 @@
 using WordAnalytics.Application.Features.GetAnalysis;
 using WordAnalytics.Domain.Analysis;
+using WordAnalytics.Tests.TestSupport;
 
-namespace WordAnalytics.Tests;
+namespace WordAnalytics.Tests.Unit.Application;
 
 public class GetAnalysisHandlerTests
 {

@@ -4,7 +4,7 @@ using WordAnalytics.Domain.Analysis;
 using WordAnalytics.Infrastructure.AnalysisHistory;
 using WordAnalytics.Infrastructure.Persistence;
 
-namespace WordAnalytics.Tests.Integration;
+namespace WordAnalytics.Tests.Integration.Infrastructure;
 
 public sealed class EfAnalysisStoreTests : IAsyncLifetime
 {

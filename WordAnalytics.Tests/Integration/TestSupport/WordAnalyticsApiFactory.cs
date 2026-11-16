@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WordAnalytics.Tests.Integration
+namespace WordAnalytics.Tests.Integration.TestSupport
 {
     public class WordAnalyticsApiFactory : WebApplicationFactory<Program>
     {
