@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WordAnalytics.Api.Infrastructure.RateLimiting
+namespace WordAnalytics.Api.Hosting.RateLimiting
 {
     public sealed class RateLimitingSettings
     {

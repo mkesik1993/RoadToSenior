@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using WordAnalytics.Api.Filters;
-using WordAnalytics.Api.Infrastructure.RateLimiting;
+using WordAnalytics.Api.Hosting.RateLimiting;
 using WordAnalytics.Application.Features.CountWords;
 
 namespace WordAnalytics.Api.Features.CountWords;

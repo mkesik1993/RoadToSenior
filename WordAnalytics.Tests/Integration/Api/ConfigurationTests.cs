@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 using WordAnalytics.Api.Features.AnalyzeText;
+using WordAnalytics.Tests.Integration.TestSupport;
 
-namespace WordAnalytics.Tests.Integration
+namespace WordAnalytics.Tests.Integration.Api
 {
     public class ConfigurationTests
     {

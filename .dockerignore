@@ -4,6 +4,7 @@
 **/CoverageReport/
 
 .git/
+.env
 .vs/
 .idea/
 **/*.user

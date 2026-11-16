@@ -4,13 +4,15 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WordAnalytics.Tests.Integration
+namespace WordAnalytics.Tests.Integration.TestSupport
 {
     public class WordAnalyticsApiFactory : WebApplicationFactory<Program>
     {
         private readonly Dictionary<string, string?> _configuration = new()
         {
-            ["RateLimiting:PermitLimit"] = "10000"
+            ["RateLimiting:PermitLimit"] = "10000",
+            ["ConnectionStrings:WordAnalytics"] =
+                "Host=localhost;Port=5432;Database=wordanalytics;Username=wordanalytics;Password=wordanalytics-local-only"
         };
         private Action<IServiceCollection>? _configureServices;
 
@@ -29,6 +31,9 @@ namespace WordAnalytics.Tests.Integration
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Testing");
+            builder.UseSetting(
+                "ConnectionStrings:WordAnalytics",
+                _configuration["ConnectionStrings:WordAnalytics"]);
 
             builder.ConfigureAppConfiguration((_, config) =>
             {

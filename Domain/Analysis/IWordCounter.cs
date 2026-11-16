@@ -2,6 +2,6 @@
 {
     public interface IWordCounter
     {
-        public Dictionary<string, int> CountWords(string? input);
+        IReadOnlyDictionary<string, int> CountWords(string? input);
     }
 }

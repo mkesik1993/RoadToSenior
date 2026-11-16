@@ -6,7 +6,7 @@ using WordAnalytics.Application.Features.CountWords;
 using WordAnalytics.Application.Features.GetTopWords;
 using WordAnalytics.Domain.Analysis;
 
-namespace WordAnalytics.Tests;
+namespace WordAnalytics.Tests.Unit.Application;
 
 public class GetTopWordsHandlerTests
 {

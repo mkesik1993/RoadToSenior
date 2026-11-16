@@ -2,7 +2,9 @@
 using System.Net.Http.Json;
 using WordAnalytics.Api.Features.AnalyzeText;
 
-namespace WordAnalytics.Tests.Integration
+using WordAnalytics.Tests.Integration.TestSupport;
+
+namespace WordAnalytics.Tests.Integration.Api
 {
     public class AnalyzeEndpointTests(WordAnalyticsApiFactory factory) : IClassFixture<WordAnalyticsApiFactory>
     {

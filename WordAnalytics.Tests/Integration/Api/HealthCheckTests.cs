@@ -4,8 +4,9 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using WordAnalytics.Domain.Analysis;
+using WordAnalytics.Tests.Integration.TestSupport;
 
-namespace WordAnalytics.Tests.Integration
+namespace WordAnalytics.Tests.Integration.Api
 {
     public class HealthCheckTests(WordAnalyticsApiFactory factory) : IClassFixture<WordAnalyticsApiFactory>
     {
@@ -53,7 +54,7 @@ namespace WordAnalytics.Tests.Integration
         private class ThrowingWordCounter : IWordCounter
         {
             // Act & Assert
-            public Dictionary<string, int> CountWords(string? text)
+            public IReadOnlyDictionary<string, int> CountWords(string? text)
             {
                 throw new InvalidOperationException("Simulated failure.");
             }

@@ -7,8 +7,9 @@ using System.Net.Http.Json;
 using System.Text;
 using WordAnalytics.Api.Features.GetTopWords;
 using WordAnalytics.Domain.Analysis;
+using WordAnalytics.Tests.Integration.TestSupport;
 
-namespace WordAnalytics.Tests.Integration;
+namespace WordAnalytics.Tests.Integration.Api;
 
 public class GetTopWordsEndpointTests(WordAnalyticsApiFactory factory) : IClassFixture<WordAnalyticsApiFactory>
 {

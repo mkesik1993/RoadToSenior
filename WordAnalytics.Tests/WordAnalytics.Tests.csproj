@@ -20,13 +20,14 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Moq" Version="4.18.4" />
+		<PackageReference Include="Testcontainers.PostgreSql" Version="4.16.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Application\WordAnalytics.Application.csproj" />
 	  <ProjectReference Include="..\Api\WordAnalytics.Api\WordAnalytics.Api.csproj" />
-	  <ProjectReference Include="..\Console\WordAnalytics.Cli.csproj" />
 	  <ProjectReference Include="..\Domain\WordAnalytics.Domain.csproj" />
+	  <ProjectReference Include="..\Infrastructure\WordAnalytics.Infrastructure.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

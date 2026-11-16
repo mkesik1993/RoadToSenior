@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Application\WordAnalytics.Application.csproj" />
     <ProjectReference Include="..\..\Domain\WordAnalytics.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\WordAnalytics.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

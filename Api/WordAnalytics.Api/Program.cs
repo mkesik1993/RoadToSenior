@@ -1,14 +1,18 @@
 using WordAnalytics.Api.Features.AnalyzeText;
+using WordAnalytics.Api.Features.CreateAnalysis;
 using WordAnalytics.Api.Features.CountWords;
+using WordAnalytics.Api.Features.GetAnalysis;
 using WordAnalytics.Api.Features.GetTopWords;
-using WordAnalytics.Api.Infrastructure;
-using WordAnalytics.Api.Infrastructure.HealthChecks;
-using WordAnalytics.Api.Infrastructure.RateLimiting;
 using WordAnalytics.Application;
+using WordAnalytics.Infrastructure;
+using WordAnalytics.Api.Hosting;
+using WordAnalytics.Api.Hosting.HealthChecks;
+using WordAnalytics.Api.Hosting.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -34,7 +38,9 @@ app.UseRateLimiter();
 
 app.MapApiHealthChecks();
 app.MapAnalyzeTextEndpoint();
+app.MapCreateAnalysisEndpoint();
 app.MapCountWordsEndpoint();
+app.MapGetAnalysisEndpoint();
 app.MapGetTopWordsEndpoint();
 
 app.Run();

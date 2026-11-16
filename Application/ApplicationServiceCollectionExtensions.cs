@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using WordAnalytics.Application.Analysis;
 using WordAnalytics.Application.Features.AnalyzeText;
 using WordAnalytics.Application.Features.CountWords;
+using WordAnalytics.Application.Features.CreateAnalysis;
+using WordAnalytics.Application.Features.GetAnalysis;
 using WordAnalytics.Application.Features.GetTopWords;
 using WordAnalytics.Domain.Analysis;
 
@@ -22,6 +24,8 @@ public static class ApplicationServiceCollectionExtensions
         services.AddSingleton<AnalyzeTextHandler>();
         services.AddSingleton<CountWordsHandler>();
         services.AddSingleton<GetTopWordsHandler>();
+        services.AddScoped<CreateAnalysisHandler>();
+        services.AddScoped<GetAnalysisHandler>();
         return services;
     }
 }
