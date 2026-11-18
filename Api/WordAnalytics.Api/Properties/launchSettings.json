@@ -3,8 +3,7 @@
     "http": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__WordAnalytics": "Host=localhost;Port=5433;Database=wordanalytics;Username=wordanalytics;Password=wordanalytics-local-only"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:4200"
